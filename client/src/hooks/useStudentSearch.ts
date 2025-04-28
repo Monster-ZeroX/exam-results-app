@@ -16,5 +16,8 @@ export const useStudentSearch = (query: string) => {
       return res.json();
     },
     enabled: query.length >= 2,
+    staleTime: 1000 * 60, // 1 minute
+    retry: 2,
+    refetchOnWindowFocus: false,
   });
 };

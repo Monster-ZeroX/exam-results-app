@@ -12,7 +12,7 @@ export default function Home() {
   const [selectedStudent, setSelectedStudent] = useState<Student | null>(null);
   
   const {
-    students: suggestions,
+    data: suggestions = [],
     isLoading,
     isError,
     error,

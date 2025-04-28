@@ -12,8 +12,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { query } = searchStudentSchema.parse({
         query: req.query.q,
       });
-
-      const students = await storage.searchStudentsByName(query);
+      
+      // Get limit from query params with default of 20
+      const limit = req.query.limit ? parseInt(req.query.limit as string) : 20;
+      
+      // Limit to a reasonable number to prevent performance issues
+      const safeLimit = Math.min(limit, 50);
+      
+      console.log(`Searching for "${query}" with limit ${safeLimit}`);
+      const students = await storage.searchStudentsByName(query, safeLimit);
       return res.json(students);
     } catch (error) {
       if (error instanceof ZodError) {
