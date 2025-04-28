@@ -82,7 +82,10 @@ Import completed:
 }
 
 // Run the import if this script is executed directly
-if (require.main === module) {
+// In ESM, we can check for the main module using import.meta.url
+const isMainModule = import.meta.url.endsWith('import.ts');
+
+if (isMainModule) {
   importData()
     .then(() => {
       console.log('Import completed successfully');
